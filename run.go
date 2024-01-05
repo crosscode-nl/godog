@@ -234,7 +234,7 @@ func runWithOptions(suiteName string, runner runner, opt Options) int {
 		opt.Concurrency = 1
 	}
 
-	runner.fmt = multiFmt.FormatterFunc(suiteName, output)
+	runner.fmt = multiFmt.FormatterFunc(suiteName, output, opt.SnippetFunc)
 	opt.FS = storage.FS{FS: opt.FS}
 
 	if len(opt.FeatureContents) > 0 {

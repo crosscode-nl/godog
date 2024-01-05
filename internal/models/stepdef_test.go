@@ -369,7 +369,7 @@ func TestStepDefinition_Run_StringConversionToFunctionType(t *testing.T) {
 
 // @TODO maybe we should support duration
 // fn2 := func(err time.Duration) error { return nil }
-// def = &models.StepDefinition{Handler: fn2, HandlerValue: reflect.ValueOf(fn2)}
+// def = &formatters.StepDefinition{Handler: fn2, HandlerValue: reflect.ValueOf(fn2)}
 
 // def.Args = []interface{}{"1"}
 // if _, err := def.Run(context.Background()); err == nil {

@@ -118,14 +118,14 @@ func (m *MultiFormatter) Add(name string, out io.Writer) {
 }
 
 // FormatterFunc implements the FormatterFunc for the multi formatter.
-func (m *MultiFormatter) FormatterFunc(suite string, out io.Writer) formatters.Formatter {
+func (m *MultiFormatter) FormatterFunc(suite string, out io.Writer, snippetFunc string) formatters.Formatter {
 	for _, f := range m.formatters {
 		out := out
 		if f.out != nil {
 			out = f.out
 		}
 
-		m.repeater = append(m.repeater, f.fmt(suite, out))
+		m.repeater = append(m.repeater, f.fmt(suite, out, snippetFunc))
 	}
 
 	return m.repeater

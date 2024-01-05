@@ -83,7 +83,7 @@ func Test_FailsOrPassesBasedOnStrictModeWhenHasPendingSteps(t *testing.T) {
 	var beforeScenarioFired, afterScenarioFired int
 
 	r := runner{
-		fmt:      formatters.ProgressFormatterFunc("progress", ioutil.Discard),
+		fmt:      formatters.ProgressFormatterFunc("progress", ioutil.Discard, ""),
 		features: []*models.Feature{&ft},
 		testSuiteInitializer: func(ctx *TestSuiteContext) {
 			ctx.ScenarioContext().Before(func(ctx context.Context, sc *Scenario) (context.Context, error) {
@@ -135,7 +135,7 @@ func Test_FailsOrPassesBasedOnStrictModeWhenHasUndefinedSteps(t *testing.T) {
 	ft.Pickles = gherkin.Pickles(*gd, path, (&messages.Incrementing{}).NewId)
 
 	r := runner{
-		fmt:      formatters.ProgressFormatterFunc("progress", ioutil.Discard),
+		fmt:      formatters.ProgressFormatterFunc("progress", ioutil.Discard, ""),
 		features: []*models.Feature{&ft},
 		scenarioInitializer: func(ctx *ScenarioContext) {
 			ctx.Step(`^one$`, func() error { return nil })
@@ -168,7 +168,7 @@ func Test_ShouldFailOnError(t *testing.T) {
 	ft.Pickles = gherkin.Pickles(*gd, path, (&messages.Incrementing{}).NewId)
 
 	r := runner{
-		fmt:      formatters.ProgressFormatterFunc("progress", ioutil.Discard),
+		fmt:      formatters.ProgressFormatterFunc("progress", ioutil.Discard, ""),
 		features: []*models.Feature{&ft},
 		scenarioInitializer: func(ctx *ScenarioContext) {
 			ctx.Step(`^two$`, func() error { return fmt.Errorf("error") })
@@ -525,11 +525,11 @@ func Test_AllFeaturesRun(t *testing.T) {
 ...................................................................... 210
 ...................................................................... 280
 ...................................................................... 350
-......                                                                 356
+..................................                                     384
 
 
-94 scenarios (94 passed)
-356 steps (356 passed)
+100 scenarios (100 passed)
+384 steps (384 passed)
 0s
 `
 
@@ -553,11 +553,11 @@ func Test_AllFeaturesRunAsSubtests(t *testing.T) {
 ...................................................................... 210
 ...................................................................... 280
 ...................................................................... 350
-......                                                                 356
+..................................                                     384
 
 
-94 scenarios (94 passed)
-356 steps (356 passed)
+100 scenarios (100 passed)
+384 steps (384 passed)
 0s
 `
 

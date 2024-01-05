@@ -1,4 +1,4 @@
-package formatters
+package snippets
 
 import (
 	"fmt"
@@ -22,7 +22,7 @@ var snippetHelperFuncs = template.FuncMap{
 	},
 }
 
-var undefinedSnippetsTpl = template.Must(template.New("snippets").Funcs(snippetHelperFuncs).Parse(`
+var undefinedStepFuncSnippetsTpl = template.Must(template.New("snippets").Funcs(snippetHelperFuncs).Parse(`
 {{ range . }}func {{ .Method }}({{ .Args }}) error {
 	return godog.ErrPending
 }
@@ -32,9 +32,20 @@ var undefinedSnippetsTpl = template.Must(template.New("snippets").Funcs(snippetH
 }
 `))
 
+var undefinedGwtFuncSnippetsTpl = template.Must(template.New("snippets").Funcs(snippetHelperFuncs).Parse(`
+{{ range . }}func {{ .Method }}({{ .Args }}) error {
+	return godog.ErrPending
+}
+
+{{end}}func InitializeScenario(ctx *godog.ScenarioContext) { {{ range . }}
+	ctx.{{ .Type }}({{ backticked .Expr }}, {{ .Method }}){{end}}
+}
+`))
+
 type undefinedSnippet struct {
 	Method   string
 	Expr     string
+	Type     string
 	argument *messages.PickleStepArgument
 }
 
@@ -44,7 +55,9 @@ func (s undefinedSnippet) Args() (ret string) {
 		pos       int
 		breakLoop bool
 	)
+	/*
 
+	 */
 	for !breakLoop {
 		part := s.Expr[pos:]
 		ipos := strings.Index(part, "(\\d+)")

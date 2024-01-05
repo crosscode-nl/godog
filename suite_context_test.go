@@ -49,6 +49,7 @@ func InitializeScenario(ctx *ScenarioContext) {
 	ctx.Step(`^I run feature suite with formatter "([^"]*)"$`, tc.iRunFeatureSuiteWithFormatter)
 	ctx.Step(`^(?:I )(allow|disable) variable injection`, tc.iSetVariableInjectionTo)
 	ctx.Step(`^(?:a )?feature "([^"]*)"(?: file)?:$`, tc.aFeatureFile)
+	ctx.Step(`^snippet function is: "([^"]*)"$`, tc.snippetFunctionIs)
 	ctx.Step(`^the suite should have (passed|failed)$`, tc.theSuiteShouldHave)
 
 	ctx.Step(`^I should have ([\d]+) features? files?:$`, tc.iShouldHaveNumFeatureFiles)
@@ -218,6 +219,7 @@ type godogFeaturesScenario struct {
 	features         []*models.Feature
 	testedSuite      *suite
 	testSuiteContext TestSuiteContext
+	snippetFunc      string
 	events           []*firedEvent
 	out              bytes.Buffer
 	allowInjection   bool
@@ -237,6 +239,10 @@ func (tc *godogFeaturesScenario) ResetBeforeEachScenario(ctx context.Context, sc
 	tc.allowInjection = false
 
 	return ctx, nil
+}
+
+func (tc *godogFeaturesScenario) snippetFunctionIs(snippetFunc string) {
+	tc.snippetFunc = snippetFunc
 }
 
 func (tc *godogFeaturesScenario) iSetVariableInjectionTo(to string) error {
@@ -275,7 +281,7 @@ func (tc *godogFeaturesScenario) iRunFeatureSuiteWithTagsAndFormatter(filter str
 		}
 	}
 
-	tc.testedSuite.fmt = fmtFunc("godog", colors.Uncolored(&tc.out))
+	tc.testedSuite.fmt = fmtFunc("godog", colors.Uncolored(&tc.out), tc.snippetFunc)
 	if fmt, ok := tc.testedSuite.fmt.(storageFormatter); ok {
 		fmt.SetStorage(tc.testedSuite.storage)
 	}

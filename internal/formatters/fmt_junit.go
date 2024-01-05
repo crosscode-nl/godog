@@ -18,8 +18,8 @@ func init() {
 }
 
 // JUnitFormatterFunc implements the FormatterFunc for the junit formatter
-func JUnitFormatterFunc(suite string, out io.Writer) formatters.Formatter {
-	return &JUnit{Base: NewBase(suite, out)}
+func JUnitFormatterFunc(suite string, out io.Writer, snippetFunc string) formatters.Formatter {
+	return &JUnit{Base: NewBase(suite, out, snippetFunc)}
 }
 
 // JUnit renders test results in JUnit format.

@@ -16,7 +16,7 @@ type registeredFormatter struct {
 var registeredFormatters []*registeredFormatter
 
 // FindFmt searches available formatters registered
-// and returns FormaterFunc matched by given
+// and returns FormatterFunc matched by given
 // format name or nil otherwise
 func FindFmt(name string) FormatterFunc {
 	for _, el := range registeredFormatters {
@@ -75,7 +75,8 @@ type Formatter interface {
 
 // FormatterFunc builds a formatter with given
 // suite name and io.Writer to record output
-type FormatterFunc func(string, io.Writer) Formatter
+// snippet string can be provided to use a different snippet generator
+type FormatterFunc func(string, io.Writer, string) Formatter
 
 // StepDefinition is a registered step definition
 // contains a StepHandler and regexp which

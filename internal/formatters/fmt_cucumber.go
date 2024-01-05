@@ -28,8 +28,8 @@ func init() {
 }
 
 // CucumberFormatterFunc implements the FormatterFunc for the cucumber formatter
-func CucumberFormatterFunc(suite string, out io.Writer) formatters.Formatter {
-	return &Cuke{Base: NewBase(suite, out)}
+func CucumberFormatterFunc(suite string, out io.Writer, snippetFunc string) formatters.Formatter {
+	return &Cuke{Base: NewBase(suite, out, snippetFunc)}
 }
 
 // Cuke ...

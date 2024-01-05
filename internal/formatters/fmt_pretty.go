@@ -20,8 +20,8 @@ func init() {
 }
 
 // PrettyFormatterFunc implements the FormatterFunc for the pretty formatter
-func PrettyFormatterFunc(suite string, out io.Writer) formatters.Formatter {
-	return &Pretty{Base: NewBase(suite, out)}
+func PrettyFormatterFunc(suite string, out io.Writer, snippetFunc string) formatters.Formatter {
+	return &Pretty{Base: NewBase(suite, out, snippetFunc)}
 }
 
 var outlinePlaceholderRegexp = regexp.MustCompile("<[^>]+>")

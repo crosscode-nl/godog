@@ -16,15 +16,15 @@ func init() {
 }
 
 // ProgressFormatterFunc implements the FormatterFunc for the progress formatter.
-func ProgressFormatterFunc(suite string, out io.Writer) formatters.Formatter {
-	return NewProgress(suite, out)
+func ProgressFormatterFunc(suite string, out io.Writer, snippetFunc string) formatters.Formatter {
+	return NewProgress(suite, out, snippetFunc)
 }
 
 // NewProgress creates a new progress formatter.
-func NewProgress(suite string, out io.Writer) *Progress {
+func NewProgress(suite string, out io.Writer, snippetFunc string) *Progress {
 	steps := 0
 	return &Progress{
-		Base:        NewBase(suite, out),
+		Base:        NewBase(suite, out, snippetFunc),
 		StepsPerRow: 70,
 		Steps:       &steps,
 	}
